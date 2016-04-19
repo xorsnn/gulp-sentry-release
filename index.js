@@ -10,12 +10,14 @@ module.exports = function (packageFile, opt) {
 	if (!opt || !opt.API_KEY || !opt.API_URL) {
 		throw new PluginError("gulp-sentry-release", "Require options API_KEY and API_URL");
 	}
+
+	var packageJSON = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
+	var version = packageJSON.version;
+
 	if (!!opt.versionPrefix) {
 		version = opt.versionPrefix + version;
 	}
 
-	var packageJSON = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
-	var version = packageJSON.version;
 	var API_URL = opt.API_URL.replace(/\/$/, "") + '/releases/';
 	var API_KEY = opt.API_KEY;
 	var streamCount = 0;
