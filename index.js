@@ -190,6 +190,7 @@ module.exports = function (packageFile, opt) {
 		release: release,
 		deleteVersion: deleteVersion,
 		createVersion: createVersion,
-		sentryAPI: sentryAPI
+		sentryAPI: sentryAPI,
+        version: version
 	};
 };
