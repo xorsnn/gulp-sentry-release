@@ -15,7 +15,7 @@ module.exports = function (packageFile, opt) {
 	var version = packageJSON.version;
 
 	if (!!opt.versionPrefix) {
-		version = opt.versionPrefix + version;
+		version = opt.versionPrefix + "-" + version;
 	}
 
 	var API_URL = opt.API_URL.replace(/\/$/, "") + '/releases/';
