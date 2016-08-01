@@ -176,26 +176,10 @@ module.exports = function (packageFile, opt) {
 				if (err) {
 					gutil.log(err);
 				}
+				// we just don't care if the version allready existed - trying to upload artiffacts
 				if (res.statusCode >= 400) {
 					// if replace flag is set, then we delete version to re-create it
-					if (replace) {
-						console.log("version exists replacing");
-						// var delRes = deleteVersion(version);
-						// console.log(delRes);
-						sentryAPI.delete(version, function (err, res, body){
-							if (err) {
-								gutil.log(err);
-							}
-							if (res.statusCode === 404) {
-								throw new PluginError("gulp-sentry-release.deleteVersion(version)", "Server return error 404: Version not found. " + body);
-							}
-							gutil.log('Deleted version: ' + version);
-							// cb();
-							console.log("version deleted, now creating");
-							// return 
-						});
-						// createVersion(version, false);
-					} else {
+					if (!replace) {
 						throw new PluginError("gulp-sentry-release.createVersion(version)", "Version existed. " + body);
 					}
 				}
