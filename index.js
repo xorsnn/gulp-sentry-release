@@ -161,7 +161,9 @@ module.exports = function (packageFile, opt) {
 	/***************************************************************************
 	*  Create a version
 	***************************************************************************/
-	var createVersion = function (version) {
+	var createVersion = function (version, replace) {
+		// we replace by default
+		replace = (replace==undefined) ? true : replace;
 		if (!version) {
 			throw new PluginError("gulp-sentry-release.createVersion(version)", "Require version to create");
 		}
@@ -175,7 +177,13 @@ module.exports = function (packageFile, opt) {
 					gutil.log(err);
 				}
 				if (res.statusCode >= 400) {
-					throw new PluginError("gulp-sentry-release.createVersion(version)", "Version existed. " + body);
+					// if replace flag is set, then we delete version to re-create it
+					if (replace) {
+						deleteVersion(version);
+						createVersion(version, false);
+					} else {
+						throw new PluginError("gulp-sentry-release.createVersion(version)", "Version existed. " + body);
+					}
 				}
 				gutil.log('Created version: ' + version);
 				cb();
