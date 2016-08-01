@@ -179,6 +179,7 @@ module.exports = function (packageFile, opt) {
 				// we just don't care if the version allready existed - trying to upload artiffacts
 				if (res.statusCode >= 400) {
 					// if replace flag is set, then we delete version to re-create it
+					gutil.log('Version ' + version + ' already exists.');
 					if (!replace) {
 						throw new PluginError("gulp-sentry-release.createVersion(version)", "Version existed. " + body);
 					}
