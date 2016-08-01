@@ -179,8 +179,11 @@ module.exports = function (packageFile, opt) {
 				if (res.statusCode >= 400) {
 					// if replace flag is set, then we delete version to re-create it
 					if (replace) {
-						deleteVersion(version);
-						createVersion(version, false);
+						console.log("version exists replacing");
+						var delRes = deleteVersion(version);
+						console.log(delRes);
+						console.log("version deleted, now creating");
+						// createVersion(version, false);
 					} else {
 						throw new PluginError("gulp-sentry-release.createVersion(version)", "Version existed. " + body);
 					}
